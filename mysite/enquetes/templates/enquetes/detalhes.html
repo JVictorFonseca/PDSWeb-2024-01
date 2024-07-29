@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Enquetes App</title>
+    </head>
+    <body>
+        <h1>Aplicação de Enquetes</h1>
+        <h3>Detalhes da Enquete #{{ pergunta.id }}</h3>
+        <h3>{{ pergunta.texto }}</h3>
+        <p>Data de publicação: {{ pergunta.data_pub }}</p>
+        {% if erro %}
+            <hr/>
+            <p><b>{{ erro }}</b></p>
+            <hr/>
+        {% endif %}
+        <p>Alternativas possíveis:</p>
+        <form method="post"
+              action="{% url 'enquetes:detalhes' pergunta.id %}" >
+            {% csrf_token %}
+        <ul>
+            {% for alt in pergunta.alternativa_set.all %}
+                <li>
+                    <input id="alt{{ forloop.counter }}" type="radio"
+                         name="escolha" value="{{ alt.id }}"/>
+                    <label for="alt{{ forloop.counter }}">
+                    {{ alt.texto }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Registre seu voto"/>
+        </form>
+        <hr/>
+        <a href="{% url 'enquetes:index' %}">Voltar</a>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <title>Enquetes App</title>
+        <link rel="stylesheet" type="text/css"
+                href="{% static '/enquetes/css/style.css' %}"/>
+    </head>
+    <body>
+        <h1>Aplicação de Enquetes</h1>
+        <img width="100" src="{% static 'enquetes/img/logo.jpg' %}" />
+        <h3>Lista das enquetes cadastradas:</h3>
+        {% if pergunta_list %}
+            <ol>
+                {% for p in pergunta_list %}
+                    <li>
+                        <a href="{% url 'enquetes:detalhes' p.id %}">
+                        {{ p.texto }}</a>&nbsp;&nbsp;
+                        (<a href="{% url 'enquetes:resultado' p.id %}">Ver parcial</a>)
+                    </li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <p>Nenhuma enquete cadastrada!</p>
+        {% endif %}
+        <hr/>
+        &copy;DSWeb/TADS/CNAT/IFRN - 2024.
+    </body>
+</html>
